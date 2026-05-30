@@ -1,7 +1,8 @@
 import os
 
-from langgraph.graph import END, START, StateGraph
 from langgraph.checkpoint.memory import MemorySaver
+from langgraph.graph import END, START, StateGraph
+from langgraph.types import Command, interrupt
 
 from app.agents.consistency_checker import check_consistency
 from app.agents.document_extractor import extract_documents
@@ -26,8 +27,11 @@ def route_after_risk_scorer(state: ComplianceState) -> str:
 
 
 def human_review(state: ComplianceState) -> dict:
-    """Passthrough stub — replaced with interrupt() in Phase 4."""
-    return {}
+    """Pause the graph and surface risk findings for human decision."""
+    risk = state.get("risk_result")
+    payload = risk.model_dump() if risk else {}
+    decision: str = interrupt(payload)
+    return {"human_decision": decision}
 
 
 def _build_graph():
@@ -41,7 +45,6 @@ def _build_graph():
     builder.add_node("human_review", human_review)
     builder.add_node("report_generator", generate_report)
 
-    # Linear start
     builder.add_edge(START, "document_extractor")
 
     # Parallel fan-out
@@ -49,12 +52,11 @@ def _build_graph():
     builder.add_edge("document_extractor", "policy_checker")
     builder.add_edge("document_extractor", "consistency_checker")
 
-    # Fan-in to risk scorer
+    # Fan-in
     builder.add_edge("sanctions_screener", "risk_scorer")
     builder.add_edge("policy_checker", "risk_scorer")
     builder.add_edge("consistency_checker", "risk_scorer")
 
-    # Conditional routing after risk scorer
     builder.add_conditional_edges(
         "risk_scorer",
         route_after_risk_scorer,
@@ -74,7 +76,11 @@ def run_graph(
     document_paths: list[str],
     policy_path: str | None,
     thread_id: str,
+    resume_command: Command | None = None,
 ) -> ComplianceState:
+    config = {"configurable": {"thread_id": thread_id}}
+    if resume_command is not None:
+        return graph.invoke(resume_command, config=config)
     initial_state: ComplianceState = {
         "document_paths": document_paths,
         "policy_path": policy_path,
@@ -88,5 +94,4 @@ def run_graph(
         "errors": [],
         "thread_id": thread_id,
     }
-    config = {"configurable": {"thread_id": thread_id}}
     return graph.invoke(initial_state, config=config)

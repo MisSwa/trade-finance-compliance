@@ -1,7 +1,8 @@
-from typing import Optional
-from typing_extensions import TypedDict
+import operator
+from typing import Annotated, Literal, Optional
+
 from pydantic import BaseModel, Field
-from typing import Literal
+from typing_extensions import TypedDict
 
 
 class DocumentData(BaseModel):
@@ -67,5 +68,5 @@ class ComplianceState(TypedDict):
     risk_result: Optional[RiskResult]
     compliance_report: Optional[ComplianceReport]
     human_decision: Optional[str]
-    errors: list[str]
+    errors: Annotated[list[str], operator.add]
     thread_id: str
