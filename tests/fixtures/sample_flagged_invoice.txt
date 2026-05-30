@@ -1,0 +1,35 @@
+COMMERCIAL INVOICE
+
+Invoice Number: INV-2024-00999
+Date: 2024-03-10
+
+SELLER:
+Zarkon Trading Corporation
+Free Zone Industrial Area, Unit 7
+Port Obscura, Ruritania
+
+BUYER:
+Obscure Holdings Ltd
+PO Box 4521, Shadow Bay, Kravonia
+
+VESSEL: MV Phantom Star
+PORT OF LOADING: Port Obscura, Ruritania
+PORT OF DISCHARGE: Darkwater Terminal, Kravonia
+COUNTRY OF ORIGIN: Ruritania
+
+GOODS DESCRIPTION:
+Precision electronic components — general industrial use
+HS Code: 8542.31.00
+Quantity: 500 units
+Unit Price: USD 800.00
+Total Amount: USD 400,000.00
+
+CURRENCY: USD
+PAYMENT TERMS: Advance payment — full amount
+INCOTERMS: EXW Port Obscura
+
+Certification: Seller certifies goods are for industrial use only.
+
+Note: This fixture is intentionally constructed with multiple watchlist
+hits (sanctioned entity, sanctioned vessel, high-risk country, high-risk
+port) for use in sanctions screening tests.
