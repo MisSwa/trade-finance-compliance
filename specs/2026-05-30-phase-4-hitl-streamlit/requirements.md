@@ -34,8 +34,15 @@ Use a module-level dict (`_sessions`) in `app/state_store.py`. This is the simpl
 ### Background thread contract
 Each graph run (initial and resume) is a separate daemon thread. The thread updates `_sessions` directly. Streamlit polls by calling `st.rerun()` every 2 s while `status == "processing"`. The `session_id` is a UUID stored in `st.session_state` on first render and persists across reruns within the same browser session.
 
+After a graph run, the thread inspects `graph.get_state(config).next` rather than catching an exception to determine whether the graph paused at `human_review`. If `.next` is non-empty the thread writes `status="awaiting_review"` and extracts the interrupt payload via task interrupts; otherwise it writes `status="completed"` with the final state.
+
 ### interrupt() data
 `interrupt()` is called with the `RiskResult` dict as the interrupt value. The Streamlit review view reads `interrupt_data` from the session store to populate the findings display. When the officer submits a decision, `resume_review()` calls `Command(resume=decision_string)`.
+
+**Important — LangGraph 0.2.57 behaviour:** `interrupt()` does NOT raise `GraphInterrupt` to the caller of `graph.invoke()`. Instead, `invoke()` returns normally with the partial state at the checkpoint, and the graph is persisted as paused. Detect a pause by checking `graph.get_state(config).next` — a non-empty tuple means the graph is waiting at the named node(s). `app/runner.py` uses this check; `pytest.raises(GraphInterrupt)` cannot be used in integration tests.
+
+### Parallel-write safety on `errors` field
+`ComplianceState.errors` must be declared as `Annotated[list[str], operator.add]` (not a plain `list[str]`). The three parallel agents (sanctions_screener, policy_checker, consistency_checker) all write to the `errors` field in the same LangGraph execution step when they fail. LangGraph's default `LastValue` channel only accepts one writer per step and raises `InvalidUpdateError` otherwise. The `operator.add` reducer tells LangGraph to concatenate the lists from all parallel writers.
 
 ### File handling
 Uploaded files are written to `UPLOAD_DIR` (from env, default `./uploads`) before the graph thread starts. The graph reads them from disk via `pdf_reader`. Files are not cleaned up automatically in Phase 4 (cleanup is out of scope for the demo).

@@ -26,7 +26,7 @@ These are non-negotiable for this project:
 |---|---|---|
 | LLM | `langchain-anthropic` | `ChatAnthropic` wrapping Claude claude-sonnet-4-5 |
 | Model | `claude-claude-sonnet-4-5` (configurable via `COMPLIANCE_MODEL` env var) | claude-sonnet-4-5 for all agents; override for testing |
-| Agent orchestration | `langgraph >= 0.2` | StateGraph with parallel fan-out, `interrupt()` for HITL |
+| Agent orchestration | `langgraph >= 0.2` | StateGraph with parallel fan-out, `interrupt()` for HITL. **In 0.2.57 `interrupt()` does NOT raise `GraphInterrupt` to the `invoke()` caller** — `invoke()` returns the partial state normally; detect pause via `graph.get_state(config).next` (non-empty tuple = graph is waiting) |
 | Graph state persistence | `langgraph.checkpoint.memory.MemorySaver` | In-memory only; thread-safe for single-server demo |
 | Structured output | `ChatAnthropic.with_structured_output(PydanticModel)` | Forces agents to return typed Pydantic objects |
 | Tracing & evaluation | `langsmith >= 0.2` | Full trace of every agent run; eval datasets in LangSmith UI |
@@ -58,6 +58,8 @@ These are non-negotiable for this project:
 | Type hints | `typing` stdlib | `Optional`, `Literal`, `list` used inside TypedDict field definitions |
 
 **Why TypedDict over Pydantic for state?** LangGraph's `StateGraph` expects a plain `TypedDict` (or dataclass). Using TypedDict keeps state manipulation simple: nodes return plain dicts of the fields they update, and LangGraph merges them. Pydantic validation is reserved for the LLM boundary only.
+
+**Parallel-write fields must use `Annotated` reducers.** Any `ComplianceState` field that can be written by more than one node in the same execution step must be declared with an explicit reducer, e.g. `errors: Annotated[list[str], operator.add]`. LangGraph's default `LastValue` channel accepts only one writer per step and raises `InvalidUpdateError` if multiple parallel nodes return the same key. The `operator.add` reducer concatenates the lists from all writers in the step.
 
 ### Observability & Logging
 
@@ -290,6 +292,8 @@ def mock_llm(mocker):
     return mock
 ```
 
+**Integration tests must mock all LLM agents.** Mocking only `document_extractor` is insufficient once the full multi-agent graph is in place. Unmocked parallel agents (sanctions_screener, policy_checker, consistency_checker) fail with `confidence=0.0`; the risk_scorer's `min(confidence)` falls below the threshold and routes to `human_review`, causing the graph to pause. Integration routing tests must mock all five agents (extractor + three parallel + report_generator) to produce a deterministic "clear" result and run the graph to completion without interruption.
+
 LangSmith tracing is disabled in the test environment via:
 ```
 LANGCHAIN_TRACING_V2=false   # set in pytest.ini or conftest.py os.environ
@@ -347,7 +351,7 @@ tests/ui/
 | `test_processing_view_shown` | After valid upload, status transitions to `processing` and spinner is visible |
 | `test_review_view_renders` | When `st.session_state.status = "awaiting_review"` is pre-set, review widgets render correctly |
 | `test_decision_submit` | Selecting a decision and clicking confirm updates `st.session_state` with the correct decision value |
-| `test_report_view_renders` | When `st.session_state.status = "completed"` with a mock report, report content is displayed |
+| `test_report_view_renders` | When `st.session_state.status = "completed"` with a mock report, report subheader and restart button are present (**note:** `at.download_button` does not exist in `streamlit >= 1.35` AppTest — assert on `at.subheader` for report content) |
 | `test_error_view_renders` | When status is `error`, error message is shown and restart button is present |
 
 **Pattern — pre-seeding session state**

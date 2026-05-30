@@ -10,7 +10,7 @@ Phase 4 is ready to merge when all automated tests pass. Manual browser demo is 
 pytest tests/unit/ -m unit -v
 ```
 
-All 67 tests from Phases 1–3 must continue to pass. New tests that must pass:
+All 72 tests from Phases 1–3 must continue to pass (67 original + 5 state-store tests added in this phase). New tests that must pass:
 
 | Test file | Key assertions |
 |---|---|
@@ -43,7 +43,7 @@ pytest tests/ui/ -v
 | `test_processing_view_shown` | Pre-set `status="processing"` renders spinner |
 | `test_review_view_renders` | Pre-set `status="awaiting_review"` renders decision radio and confirm button |
 | `test_decision_submit` | Selecting decision and clicking confirm updates session state |
-| `test_report_view_renders` | Pre-set `status="completed"` renders report and download button |
+| `test_report_view_renders` | Pre-set `status="completed"` renders "Compliance Report" subheader and "Start New Review" button (`at.download_button` does not exist in Streamlit 1.35 AppTest; assert on `at.subheader` instead) |
 | `test_error_view_renders` | Pre-set `status="error"` renders error message and restart button |
 | `test_restart_clears_session` | Clicking restart resets status to idle |
 
@@ -51,7 +51,7 @@ pytest tests/ui/ -v
 
 ## Merge Checklist
 
-- [ ] `pytest tests/unit/ -m unit -v` — all 67+ tests pass
+- [ ] `pytest tests/unit/ -m unit -v` — all 72+ tests pass
 - [ ] `pytest tests/integration/ -v` — HITL interrupt and resume tests pass
 - [ ] `pytest tests/ui/ -v` — all 8 AppTest UI tests pass
 - [ ] No real API calls in any test (graph mocked in HITL and UI tests)

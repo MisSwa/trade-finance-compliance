@@ -12,9 +12,10 @@ Each task group is independently completable. Within a group, tasks are ordered 
    - Update `run_graph()` to accept an optional `resume_command: Command | None` parameter; when provided, invoke the graph with the command instead of initial state
 
 2. Add `tests/integration/test_graph_hitl.py`:
-   - Test: graph pauses at `human_review` node when verdict is `"needs_review"` — invoke raises `GraphInterrupt` (or graph state shows interrupt pending)
+   - Test: graph pauses at `human_review` node when verdict is `"needs_review"` — after `run_graph()` returns, `graph.get_state(config).next` contains `"human_review"` (LangGraph 0.2.57: `interrupt()` does NOT raise `GraphInterrupt` to the `invoke()` caller; the partial state is checkpointed and `invoke()` returns normally)
    - Test: `Command(resume="approve")` unblocks the graph; final state has `human_decision == "approve"` and a populated `compliance_report`
    - Test: `Command(resume="reject")` unblocks the graph; final state has `human_decision == "reject"`
+   - All tests must mock **all five LLM agents** (document_extractor, sanctions_screener, policy_checker, consistency_checker, report_generator); mocking only the extractor is insufficient — unmocked parallel agents fail with confidence=0.0 → risk_scorer routes to human_review even in non-HITL tests
 
 ## Group 2 — Shared State Contract
 
@@ -77,6 +78,6 @@ Each task group is independently completable. Within a group, tasks are ordered 
    - `test_processing_view_shown`: pre-set `status="processing"` renders spinner
    - `test_review_view_renders`: pre-set `status="awaiting_review"` with mock interrupt_data renders decision radio and confirm button
    - `test_decision_submit`: selecting decision and clicking confirm updates session state
-   - `test_report_view_renders`: pre-set `status="completed"` with mock final_state renders report and download button
+   - `test_report_view_renders`: pre-set `status="completed"` with mock final_state renders the "Compliance Report" subheader and "Start New Review" button (`at.download_button` does not exist in Streamlit 1.35's AppTest — check `at.subheader` for report content instead)
    - `test_error_view_renders`: pre-set `status="error"` renders error message and restart button
    - `test_restart_clears_session`: clicking restart resets status to idle
