@@ -3,6 +3,8 @@ import pytest
 
 # Disable LangSmith tracing in all test runs
 os.environ.setdefault("LANGCHAIN_TRACING_V2", "false")
+# Provide a test-safe model name so env["COMPLIANCE_MODEL"] never raises in tests
+os.environ.setdefault("COMPLIANCE_MODEL", "claude-sonnet-4-5")
 
 from app.models.schemas import ComplianceState, DocumentData
 
