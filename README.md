@@ -1,25 +1,162 @@
-Build a multi-agent AI system for trade finance compliance at a bank.
+# Trade Finance Compliance
 
+A multi-agent AI system that assists compliance officers in reviewing trade finance transactions. The system accepts PDF trade documents, runs specialized agents in parallel to screen for sanctions exposure, policy violations, and document inconsistencies, and produces an auditable compliance verdict — **Clear**, **Needs Review**, or **Rejected**.
 
-The inputs are the trade documents — things like the bill of lading, invoice, and packing list. These come as PDFs. There may also be a policy document with the bank's internal compliance rules.
-The output should be a compliance report — whether the transaction is clear, needs review, or should be rejected. With reasons.
+Uncertain or flagged cases are routed to a compliance officer for human review before a final decision is made.
 
+---
 
-assume the compliance officer uploads the documents manually. No database integration for now
+## Overview
 
+**Agents:**
 
-These documents contain sensitive information — company names, bank account details, transaction amounts, country of origin. Treat it as confidential financial data. Think about what you log and what you don't.
+| Agent | What it does |
+|---|---|
+| Document Extractor | Reads PDFs and extracts structured fields (buyer, seller, goods, ports, vessel, amounts) via Claude |
+| Sanctions Screener | Checks all extracted entities against a mock sanctions watchlist; uses Claude to produce a structured assessment |
+| Policy Checker | Validates the transaction against bank policy rules using Claude |
+| Consistency Checker | Detects cross-field inconsistencies that may indicate fraud or TBML |
+| Risk Scorer | Aggregates findings into a numeric risk score and verdict (rule-based, no LLM) |
+| Report Generator | Produces the final auditable compliance report including regulatory recommendations |
 
+**Routing:**
 
-we want to see multi-agent. So think about how you break this down into specialized agents rather than one agent doing everything.
+- `rejected` or `needs_review` verdict → human review (graph pauses for officer decision)
+- `clear` but confidence < 0.7 → human review
+- `clear` and confidence ≥ 0.7 → automated report
 
+---
 
-We want human in the loop. Not a fully automated system. 
+## Setup
 
-When in case of low confidence fail gracefully. 
+```bash
+git clone <repo>
+cd trade-finance-compliance
 
-Evaluation through the langsmith.
+python -m venv .venv
+source .venv/bin/activate       # Windows: .venv\Scripts\activate
 
-Sucess means when the agent can accurately whether the transaction should be rejected or reeds review and if its clear. Also should be able to give a detailed response which is fully compliant. 
+pip install -r requirements.txt
 
-Speed, accuracy and compliance are the keys to be focused on
+cp .env.example .env
+# Edit .env and fill in:
+#   ANTHROPIC_API_KEY=...
+#   LANGCHAIN_API_KEY=...       (required for LangSmith tracing and live eval)
+#   COMPLIANCE_MODEL=claude-sonnet-4-5
+```
+
+---
+
+## Running the demo
+
+```bash
+streamlit run streamlit_app.py
+```
+
+Open `http://localhost:8501` in your browser. The expected flow:
+
+1. **Upload** — drop one or more trade document PDFs (invoice, bill of lading, packing list) and optionally a policy PDF
+2. **Processing** — agents run in parallel; progress is shown live
+3. **Review** (flagged cases) — risk findings are displayed; select Approve / Reject / Escalate and add notes
+4. **Report** — full compliance report with verdict, risk factors, and regulatory recommendations; downloadable as text
+
+---
+
+## CLI mode
+
+```bash
+python main.py path/to/invoice.pdf
+python main.py path/to/invoice.pdf path/to/bill_of_lading.pdf --policy path/to/policy.pdf
+```
+
+Prints the extracted `DocumentData` as JSON and exits with code 1 if extraction confidence is 0.0 (unreadable PDF).
+
+---
+
+## Viewing LangSmith traces
+
+Set `LANGCHAIN_TRACING_V2=true` in your `.env` file (it is `false` by default). All subsequent graph runs will appear in the LangSmith UI under the project name configured in `LANGCHAIN_PROJECT`.
+
+1. Log in to [smith.langchain.com](https://smith.langchain.com)
+2. Navigate to **Projects** → your project name
+3. Each run shows the full reasoning chain for every agent
+
+---
+
+## Running tests
+
+```bash
+# All tests (unit + integration — no real API calls)
+pytest
+
+# Unit tests only
+pytest tests/unit/ -v
+
+# Integration tests only
+pytest tests/integration/ -v
+
+# UI tests only
+pytest tests/ui/ -v
+```
+
+All tests mock LLM calls. No `ANTHROPIC_API_KEY` is required to run the test suite.
+
+---
+
+## Running evaluation
+
+**Local dry-run (required for merge gate — no API calls):**
+
+```bash
+LANGCHAIN_TRACING_V2=false python scripts/run_eval.py --dry-run
+```
+
+Expected output:
+
+```
+Running evaluation in dry-run mode (no LangSmith API calls)...
+  Case case-a-clear (clear): PASS
+  Case case-b-rejected (rejected): PASS
+  Case case-c-needs-review (needs_review): PASS
+Evaluation complete. Accuracy: 3/3 cases matched.
+```
+
+**Live LangSmith evaluation (requires `LANGCHAIN_API_KEY`):**
+
+```bash
+python scripts/run_eval.py
+```
+
+Results appear in the LangSmith UI under the `trade-finance-compliance-v1` dataset → **Experiments**.
+
+---
+
+## Architecture
+
+```
+Streamlit UI (streamlit_app.py)
+    │
+    ├── Background thread (app/runner.py)
+    │       └── run_graph() / resume with Command
+    │
+    └── LangGraph workflow (app/graph/workflow.py)
+            │
+            ├── document_extractor   ──────────────────────┐
+            ├── [parallel]                                  │
+            │   ├── sanctions_screener                      │
+            │   ├── policy_checker                          ▼
+            │   └── consistency_checker        risk_scorer (rule-based)
+            │                                       │
+            │                           ┌───────────┴───────────┐
+            │                      human_review          report_generator
+            │                      (interrupt)                   │
+            │                           └───────────────────────►│
+            │                                                     ▼
+            └─────────────────────────────────────── ComplianceReport
+```
+
+**State:** `ComplianceState` TypedDict flows through all nodes. The `errors` field uses `Annotated[list, operator.add]` so parallel agents can each append errors without write conflicts.
+
+**Privacy:** Logs never contain entity names, amounts, or account numbers. Sensitive fields are SHA-256 hashed with `[ENTITY:hash]` format for log correlation only.
+
+**Observability:** LangSmith captures the full reasoning chain of every agent run when `LANGCHAIN_TRACING_V2=true`.

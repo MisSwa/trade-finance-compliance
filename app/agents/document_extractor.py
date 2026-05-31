@@ -32,16 +32,36 @@ Document text:
 
 
 def extract_documents(state: ComplianceState) -> dict:
-    model = os.environ["COMPLIANCE_MODEL"]
-    llm = ChatAnthropic(model=model)
-    structured_llm = llm.with_structured_output(DocumentData)
-
     texts = [
         extract_text(path)
         for path in state["document_paths"]
         if extract_text(path)
     ]
     combined = "\n\n---\n\n".join(texts) if texts else ""
+
+    if len(combined) < 100:
+        logger.warning("document_extractor_unreadable_pdf", total_chars=len(combined))
+        return {
+            "document_data": DocumentData(
+                buyer="",
+                seller="",
+                goods_description="",
+                amounts=[],
+                currency="",
+                country_of_origin="",
+                port_of_loading="",
+                port_of_discharge="",
+                vessel_name="",
+                date="",
+                doc_type="unknown",
+                extraction_confidence=0.0,
+            ),
+            "errors": state.get("errors", []) + ["document_extractor_unreadable_pdf"],
+        }
+
+    model = os.environ["COMPLIANCE_MODEL"]
+    llm = ChatAnthropic(model=model)
+    structured_llm = llm.with_structured_output(DocumentData)
 
     try:
         result: DocumentData = structured_llm.invoke(_PROMPT.format(text=combined))

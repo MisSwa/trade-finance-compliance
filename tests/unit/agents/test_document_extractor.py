@@ -43,7 +43,13 @@ def _mock_llm(mocker, return_value=None, side_effect=None):
     mock_llm = MagicMock()
     mock_llm.with_structured_output.return_value = mock_structured
     mocker.patch("app.agents.document_extractor.ChatAnthropic", return_value=mock_llm)
-    mocker.patch("app.agents.document_extractor.extract_text", return_value="Invoice text content.")
+    mocker.patch(
+        "app.agents.document_extractor.extract_text",
+        return_value=(
+            "Invoice text content — sufficient length for extraction testing. "
+            "This string is intentionally over one hundred characters long."
+        ),
+    )
     return mock_llm
 
 

@@ -1,0 +1,103 @@
+%PDF-1.4
+1 0 obj
+<< /Type /Catalog /Pages 2 0 R >>
+endobj
+2 0 obj
+<< /Type /Pages /Kids [3 0 R] /Count 1 >>
+endobj
+3 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792]
+   /Contents 4 0 R
+   /Resources << /Font << /F1 5 0 R >> >> >>
+endobj
+4 0 obj
+<< /Length 1035 >>
+stream
+BT
+/F1 11 Tf
+14 TL
+50 770 Td
+(COMMERCIAL INVOICE) Tj
+T*
+() Tj
+T*
+(Invoice Number: INV-2024-00451) Tj
+T*
+(Date: 2024-03-01) Tj
+T*
+() Tj
+T*
+(SELLER:) Tj
+T*
+(Reliable Exports GmbH) Tj
+T*
+(Hauptstrasse 42, 20095 Hamburg, Germany) Tj
+T*
+(VAT: DE123456789) Tj
+T*
+() Tj
+T*
+(BUYER:) Tj
+T*
+(Good Faith Importers Ltd) Tj
+T*
+(Keizersgracht 112, 1015 CW Amsterdam, Netherlands) Tj
+T*
+() Tj
+T*
+(VESSEL: MV Sunrise) Tj
+T*
+(PORT OF LOADING: Port of Hamburg, Germany) Tj
+T*
+(PORT OF DISCHARGE: Port of Rotterdam, Netherlands) Tj
+T*
+(COUNTRY OF ORIGIN: Germany) Tj
+T*
+() Tj
+T*
+(GOODS DESCRIPTION:) Tj
+T*
+(Industrial machinery parts ? non-controlled) Tj
+T*
+(HS Code: 8484.10.00) Tj
+T*
+(Quantity: 200 units) Tj
+T*
+(Unit Price: USD 250.00) Tj
+T*
+(Total Amount: USD 50,000.00) Tj
+T*
+() Tj
+T*
+(CURRENCY: USD) Tj
+T*
+(PAYMENT TERMS: Letter of Credit ? 30 days sight) Tj
+T*
+(INCOTERMS: CIF Rotterdam) Tj
+T*
+() Tj
+T*
+(This shipment complies with all applicable export regulations.) Tj
+T*
+(No dual-use or controlled items are included in this shipment.) Tj
+T*
+ET
+endstream
+endobj
+5 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica
+   /Encoding /WinAnsiEncoding >>
+endobj
+xref
+0 6
+0000000000 65535 f 
+0000000009 00000 n 
+0000000058 00000 n 
+0000000115 00000 n 
+0000000247 00000 n 
+0000001334 00000 n 
+trailer
+<< /Size 6 /Root 1 0 R >>
+startxref
+1434
+%%EOF

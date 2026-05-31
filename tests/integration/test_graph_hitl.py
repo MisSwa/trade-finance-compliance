@@ -42,7 +42,7 @@ def _patch_all_agents_needs_review(mocker):
     doc_llm = MagicMock()
     doc_llm.with_structured_output.return_value.invoke.return_value = _SAMPLE_DOC
     mocker.patch("app.agents.document_extractor.ChatAnthropic", return_value=doc_llm)
-    mocker.patch("app.agents.document_extractor.extract_text", return_value="Invoice text.")
+    mocker.patch("app.agents.document_extractor.extract_text", return_value="Invoice text content — sufficient length for extraction testing. This string is intentionally over one hundred characters long.")
 
     sanctions_llm = MagicMock()
     sanctions_llm.with_structured_output.return_value.invoke.return_value = SanctionsResult(
