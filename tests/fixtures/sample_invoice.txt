@@ -1,0 +1,32 @@
+COMMERCIAL INVOICE
+
+Invoice Number: INV-2024-00451
+Date: 2024-03-01
+
+SELLER:
+Reliable Exports GmbH
+Hauptstrasse 42, 20095 Hamburg, Germany
+VAT: DE123456789
+
+BUYER:
+Good Faith Importers Ltd
+Keizersgracht 112, 1015 CW Amsterdam, Netherlands
+
+VESSEL: MV Sunrise
+PORT OF LOADING: Port of Hamburg, Germany
+PORT OF DISCHARGE: Port of Rotterdam, Netherlands
+COUNTRY OF ORIGIN: Germany
+
+GOODS DESCRIPTION:
+Industrial machinery parts — non-controlled
+HS Code: 8484.10.00
+Quantity: 200 units
+Unit Price: USD 250.00
+Total Amount: USD 50,000.00
+
+CURRENCY: USD
+PAYMENT TERMS: Letter of Credit — 30 days sight
+INCOTERMS: CIF Rotterdam
+
+This shipment complies with all applicable export regulations.
+No dual-use or controlled items are included in this shipment.

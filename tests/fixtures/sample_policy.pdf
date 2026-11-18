@@ -1,0 +1,99 @@
+%PDF-1.4
+1 0 obj
+<< /Type /Catalog /Pages 2 0 R >>
+endobj
+2 0 obj
+<< /Type /Pages /Kids [3 0 R] /Count 1 >>
+endobj
+3 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792]
+   /Contents 4 0 R
+   /Resources << /Font << /F1 5 0 R >> >> >>
+endobj
+4 0 obj
+<< /Length 2109 >>
+stream
+BT
+/F1 11 Tf
+14 TL
+50 770 Td
+(BANK TRADE FINANCE COMPLIANCE POLICY ? EXCERPT) Tj
+T*
+(Version 3.2 | Internal Use Only) Tj
+T*
+() Tj
+T*
+(1. PROHIBITED TRANSACTIONS) Tj
+T*
+(   1.1 The Bank will not process any trade finance transaction involving:) Tj
+T*
+(       a\) Parties, vessels, or countries subject to OFAC, EU, or HMT sanctions) Tj
+T*
+(       b\) Goods classified as dual-use under EU Regulation 428/2009 without valid export licence) Tj
+T*
+(       c\) Transactions where the stated purpose cannot be verified by documentation) Tj
+T*
+(       d\) Advance payment terms for transactions exceeding USD 100,000 to high-risk jurisdictions) Tj
+T*
+() Tj
+T*
+(2. ENHANCED DUE DILIGENCE \(EDD\) TRIGGERS) Tj
+T*
+(   2.1 EDD is required when any of the following are present:) Tj
+T*
+(       a\) Country of origin or discharge port is on the Bank's High-Risk Jurisdiction List) Tj
+T*
+(       b\) Invoice amount differs from Bill of Lading declared value by more than 10%) Tj
+T*
+(       c\) Goods description uses generic terms without HS code specification) Tj
+T*
+(       d\) Transaction involves a free trade zone or special economic zone in a high-risk jurisdiction) Tj
+T*
+(       e\) Payment terms are cash in advance for amounts exceeding USD 50,000) Tj
+T*
+() Tj
+T*
+(3. DOCUMENT CONSISTENCY REQUIREMENTS) Tj
+T*
+(   3.1 The following fields must be consistent across all submitted documents:) Tj
+T*
+(       a\) Buyer and seller names must match exactly across invoice, B/L, and packing list) Tj
+T*
+(       b\) Goods description must be consistent across all documents) Tj
+T*
+(       c\) Declared values must be within 5% across invoice and packing list) Tj
+T*
+(       d\) Country of origin must be consistent across all documents) Tj
+T*
+() Tj
+T*
+(4. REPORTING OBLIGATIONS) Tj
+T*
+(   4.1 A Suspicious Activity Report \(SAR\) must be considered when:) Tj
+T*
+(       a\) A sanctions hit is confirmed by compliance officer review) Tj
+T*
+(       b\) Evidence of trade-based money laundering indicators is found) Tj
+T*
+(       c\) Customer is unable to provide satisfactory explanation for document discrepancies) Tj
+T*
+ET
+endstream
+endobj
+5 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica
+   /Encoding /WinAnsiEncoding >>
+endobj
+xref
+0 6
+0000000000 65535 f 
+0000000009 00000 n 
+0000000058 00000 n 
+0000000115 00000 n 
+0000000247 00000 n 
+0000002408 00000 n 
+trailer
+<< /Size 6 /Root 1 0 R >>
+startxref
+2508
+%%EOF

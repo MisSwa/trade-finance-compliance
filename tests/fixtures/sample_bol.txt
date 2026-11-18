@@ -1,0 +1,36 @@
+BILL OF LADING
+
+B/L Number: BOL-2024-00891
+Date of Issue: 2024-03-02
+
+SHIPPER:
+Reliable Exports GmbH
+Hauptstrasse 42, 20095 Hamburg, Germany
+
+CONSIGNEE:
+Good Faith Importers Ltd
+Keizersgracht 112, 1015 CW Amsterdam, Netherlands
+
+NOTIFY PARTY:
+Good Faith Importers Ltd (same as consignee)
+
+VESSEL NAME: MV Sunrise
+VOYAGE NUMBER: SUN-0312
+PORT OF LOADING: Port of Hamburg, Germany
+PORT OF DISCHARGE: Port of Rotterdam, Netherlands
+COUNTRY OF ORIGIN: Germany
+
+DESCRIPTION OF GOODS:
+200 cartons — Industrial machinery parts
+HS Code: 8484.10.00
+Gross Weight: 4,200 kg
+Measurement: 18.5 CBM
+
+FREIGHT: Prepaid
+SHIPPED ON BOARD: 2024-03-02
+
+This Bill of Lading is issued subject to the terms and conditions
+of the carrier's standard bill of lading. Freight and charges
+as per freight manifest. Clean on board.
+
+Number of originals: THREE (3)

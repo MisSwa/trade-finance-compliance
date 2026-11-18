@@ -1,0 +1,30 @@
+COMMERCIAL INVOICE
+
+Invoice Number: INV-2024-00777
+Date: 2024-03-15
+
+SELLER:
+Rapid Goods Corp
+123 Trade Street, Brussels, Belgium
+
+BUYER:
+Generic Trading Inc
+PO Box 999, Valletta, Malta
+
+VESSEL: MS Atlantic Wind
+PORT OF LOADING: Port of Antwerp, Belgium
+PORT OF DISCHARGE: Port of Valletta, Malta
+COUNTRY OF ORIGIN: China
+
+GOODS DESCRIPTION:
+Various merchandise
+Quantity: 1000 units
+Unit Price: USD 1,500.00
+Total Amount: USD 1,500,000.00
+
+CURRENCY: USD
+PAYMENT TERMS: Advance payment — full amount before shipment
+
+Note: This fixture intentionally omits an HS code, uses a generic buyer
+name, and uses advance payment for a large transaction — triggering
+policy violations without any sanctions hits.

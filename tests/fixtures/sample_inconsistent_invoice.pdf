@@ -1,0 +1,99 @@
+%PDF-1.4
+1 0 obj
+<< /Type /Catalog /Pages 2 0 R >>
+endobj
+2 0 obj
+<< /Type /Pages /Kids [3 0 R] /Count 1 >>
+endobj
+3 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792]
+   /Contents 4 0 R
+   /Resources << /Font << /F1 5 0 R >> >> >>
+endobj
+4 0 obj
+<< /Length 973 >>
+stream
+BT
+/F1 11 Tf
+14 TL
+50 770 Td
+(COMMERCIAL INVOICE) Tj
+T*
+() Tj
+T*
+(Invoice Number: INV-2024-00777) Tj
+T*
+(Date: 2024-03-15) Tj
+T*
+() Tj
+T*
+(SELLER:) Tj
+T*
+(Rapid Goods Corp) Tj
+T*
+(123 Trade Street, Brussels, Belgium) Tj
+T*
+() Tj
+T*
+(BUYER:) Tj
+T*
+(Generic Trading Inc) Tj
+T*
+(PO Box 999, Valletta, Malta) Tj
+T*
+() Tj
+T*
+(VESSEL: MS Atlantic Wind) Tj
+T*
+(PORT OF LOADING: Port of Antwerp, Belgium) Tj
+T*
+(PORT OF DISCHARGE: Port of Valletta, Malta) Tj
+T*
+(COUNTRY OF ORIGIN: China) Tj
+T*
+() Tj
+T*
+(GOODS DESCRIPTION:) Tj
+T*
+(Various merchandise) Tj
+T*
+(Quantity: 1000 units) Tj
+T*
+(Unit Price: USD 1,500.00) Tj
+T*
+(Total Amount: USD 1,500,000.00) Tj
+T*
+() Tj
+T*
+(CURRENCY: USD) Tj
+T*
+(PAYMENT TERMS: Advance payment ? full amount before shipment) Tj
+T*
+() Tj
+T*
+(Note: This fixture intentionally omits an HS code, uses a generic buyer) Tj
+T*
+(name, and uses advance payment for a large transaction ? triggering) Tj
+T*
+(policy violations without any sanctions hits.) Tj
+T*
+ET
+endstream
+endobj
+5 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica
+   /Encoding /WinAnsiEncoding >>
+endobj
+xref
+0 6
+0000000000 65535 f 
+0000000009 00000 n 
+0000000058 00000 n 
+0000000115 00000 n 
+0000000247 00000 n 
+0000001271 00000 n 
+trailer
+<< /Size 6 /Root 1 0 R >>
+startxref
+1371
+%%EOF

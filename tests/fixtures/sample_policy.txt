@@ -1,0 +1,30 @@
+BANK TRADE FINANCE COMPLIANCE POLICY — EXCERPT
+Version 3.2 | Internal Use Only
+
+1. PROHIBITED TRANSACTIONS
+   1.1 The Bank will not process any trade finance transaction involving:
+       a) Parties, vessels, or countries subject to OFAC, EU, or HMT sanctions
+       b) Goods classified as dual-use under EU Regulation 428/2009 without valid export licence
+       c) Transactions where the stated purpose cannot be verified by documentation
+       d) Advance payment terms for transactions exceeding USD 100,000 to high-risk jurisdictions
+
+2. ENHANCED DUE DILIGENCE (EDD) TRIGGERS
+   2.1 EDD is required when any of the following are present:
+       a) Country of origin or discharge port is on the Bank's High-Risk Jurisdiction List
+       b) Invoice amount differs from Bill of Lading declared value by more than 10%
+       c) Goods description uses generic terms without HS code specification
+       d) Transaction involves a free trade zone or special economic zone in a high-risk jurisdiction
+       e) Payment terms are cash in advance for amounts exceeding USD 50,000
+
+3. DOCUMENT CONSISTENCY REQUIREMENTS
+   3.1 The following fields must be consistent across all submitted documents:
+       a) Buyer and seller names must match exactly across invoice, B/L, and packing list
+       b) Goods description must be consistent across all documents
+       c) Declared values must be within 5% across invoice and packing list
+       d) Country of origin must be consistent across all documents
+
+4. REPORTING OBLIGATIONS
+   4.1 A Suspicious Activity Report (SAR) must be considered when:
+       a) A sanctions hit is confirmed by compliance officer review
+       b) Evidence of trade-based money laundering indicators is found
+       c) Customer is unable to provide satisfactory explanation for document discrepancies
