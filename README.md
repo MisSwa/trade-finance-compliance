@@ -4,6 +4,16 @@ A multi-agent AI system that assists compliance officers in reviewing trade fina
 
 Uncertain or flagged cases are routed to a compliance officer for human review before a final decision is made.
 
+## At a glance
+
+| | |
+|---|---|
+| **Problem** | Compliance officers manually screen trade documents for sanctions, policy, and fraud risk |
+| **What it does** | Extracts fields from trade PDFs, runs sanctions, policy, and consistency checks in parallel, and issues a Clear / Needs Review / Rejected verdict |
+| **How** | Multi-agent LangGraph workflow on Claude with a rule-based risk scorer and human-in-the-loop interrupt |
+| **Safety** | Flagged or low-confidence cases pause for officer review; logs hash sensitive entities; LangSmith evaluation suite |
+| **Stack** | Python · LangGraph · Claude (langchain-anthropic) · Pydantic · structlog · Streamlit · LangSmith · pytest |
+
 ---
 
 ## Overview
@@ -30,7 +40,7 @@ Uncertain or flagged cases are routed to a compliance officer for human review b
 ## Setup
 
 ```bash
-git clone <repo>
+git clone https://github.com/MisSwa/trade-finance-compliance.git
 cd trade-finance-compliance
 
 python -m venv .venv
